@@ -69,15 +69,16 @@ app.patch("/posts/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const selectedPost = posts.find((post) => post.id === id);
   const updatedPost = {
-    id: lastId,
+    id: id,
     title: req.body.title || selectedPost.title,
     content: req.body.content || selectedPost.content,
     author: req.body.author || selectedPost.author,
     date: new Date(),
   };
-
-  posts.push(updatedPost);
-  res.sendStatus(200);
+  const index = posts.findIndex((post) => post.id === id);
+  posts[index] = updatedPost;
+  console.log(updatedPost);
+  return res.sendStatus(200);
 });
 
 //CHALLENGE 5: DELETE a specific post by providing the post id.
